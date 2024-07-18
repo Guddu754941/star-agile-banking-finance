@@ -15,7 +15,7 @@ provider "aws" {
 }
 # Creating a VPC
 resource "aws_vpc" "proj-vpc" {
- cidr_block = "10.0.0.0/16"
+ cidr_block = "172.31.0.0/20"
 }
 
 # Create an Internet Gateway
