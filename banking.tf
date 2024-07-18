@@ -1,4 +1,3 @@
-
 #Initialize Terraform
 terraform {
   required_providers {
@@ -15,7 +14,7 @@ provider "aws" {
 }
 # Creating a VPC
 resource "aws_vpc" "proj-vpc" {
- cidr_block = "172.31.0.0/20"
+ cidr_block = "10.0.0.0/16"
 }
 
 # Create an Internet Gateway
@@ -127,7 +126,7 @@ resource "aws_eip" "proj-eip" {
 
 # Creating an ubuntu EC2 instance
 resource "aws_instance" "Prod-Server" {
- ami = "ami-0ad21ae1d0696ad58"
+ ami = "ami-0ef82eeba2c7a0eeb"
  instance_type = "t2.micro"
  availability_zone = "ap-south-1b"
  key_name = "guddu-mentor"
