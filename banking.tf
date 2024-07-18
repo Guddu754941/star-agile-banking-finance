@@ -1,4 +1,3 @@
-
 #Initialize Terraform
 terraform {
   required_providers {
@@ -55,7 +54,7 @@ resource "aws_subnet" "proj-subnet" {
 
 # Associating the subnet with the route table
 resource "aws_route_table_association" "proj-rt-sub-assoc" {
-subnet_id = aws_subnet.proj-subnet.'subnet_id'-0e3eaa2cad8bded65
+subnet_id = aws_subnet.proj-subnet.id
 route_table_id = aws_route_table.proj-rt.id
 }
 
@@ -112,7 +111,7 @@ resource "aws_security_group" "proj-sg" {
 
 # Creating a new network interface
 resource "aws_network_interface" "proj-ni" {
- subnet_id = aws_subnet.proj-subnet.'subnet_id'-0e3eaa2cad8bded65
+ subnet_id = aws_subnet.proj-subnet.id
  private_ips = ["172.31.7.240"]
  security_groups = [aws_security_group.proj-sg.id]
 }
