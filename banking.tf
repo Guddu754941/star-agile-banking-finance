@@ -109,3 +109,36 @@ resource "aws_security_group" "proj-sg" {
  }
 }
 
+# Creating a new network interface
+resource "aws_network_interface" "proj-ni" {
+ subnet_id = aws_subnet.proj-subnet.id
+ private_ips = ["172.31.7.240"]
+ security_groups = [aws_security_group.proj-sg.id]
+}
+
+# Attaching an elastic IP to the network interface
+resource "aws_eip" "proj-eip" {
+ vpc = true
+ network_interface = aws_network_interface.proj-ni.id
+ associate_with_private_ip = "172.31.7.240"
+}
+
+
+# Creating an ubuntu EC2 instance
+resource "aws_instance" "Prod-Server" {
+ ami = "ami-0ef82eeba2c7a0eeb"
+ instance_type = "t2.micro"
+ availability_zone = "ap-south-1b"
+ key_name = "guddu-mentor"
+ network_interface {
+ device_index = 0
+ network_interface_id = aws_network_interface.proj-ni.id
+ }
+ user_data  = <<-EOF
+ #!/bin/bash
+     sudo apt-get update -y
+ EOF
+ tags = {
+ Name = "Prod-Server"
+ }
+}
